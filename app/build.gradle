@@ -12,7 +12,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.pagination.app"
+        applicationId "com.retofit.app"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1

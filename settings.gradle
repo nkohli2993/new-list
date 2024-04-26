@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Local Pagination Data"
+rootProject.name = "Simple retrofit Demo"

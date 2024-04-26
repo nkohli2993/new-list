@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.pagination.app.ListFragment"
+        android:name="com.retofit.app.ListFragment"
         android:label="listFragment"
         tools:layout="@layout/fragment_list">
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.pagination.app.DetailFragment"
+        android:name="com.retofit.app.DetailFragment"
         android:label="detail page"
         tools:layout="@layout/fragment_detail">
 
