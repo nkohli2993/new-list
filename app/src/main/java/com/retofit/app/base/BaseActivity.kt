@@ -21,7 +21,7 @@ abstract class BaseActivity : AppCompatActivity() {
         initProgressLoader()
     }
 
-    fun initProgressLoader() {
+    private fun initProgressLoader() {
         progressDialog = Dialog(this)
         val view = View.inflate(this, R.layout.view_loading_circular, null)
         progressDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
