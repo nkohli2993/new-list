@@ -38,7 +38,8 @@ class ListFragment : BaseFragment<FragmentListBinding>(), BaseAdapter.OnItemClic
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (isNetworkAvailable(baseActivity!!)) {
-            val apiInterface: ApiService = ApiClient().getApiClient()!!.create(ApiService::class.java)
+            val apiInterface: ApiService =
+                ApiClient().getApiClient()!!.create(ApiService::class.java)
             apiInterface.getDataList().enqueue(object : Callback<ArrayList<APIDataBean>> {
                 override fun onResponse(
                     call: Call<ArrayList<APIDataBean>>,
@@ -49,6 +50,11 @@ class ListFragment : BaseFragment<FragmentListBinding>(), BaseAdapter.OnItemClic
                 }
 
                 override fun onFailure(call: Call<ArrayList<APIDataBean>>, t: Throwable) {
+                    Toast.makeText(
+                        baseActivity!!,
+                        t.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             })
 
