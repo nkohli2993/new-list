@@ -10,13 +10,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.widget.NestedScrollView
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.retofit.app.databinding.FragmentListBinding
 import com.retofit.app.base.BaseAdapter
 import com.retofit.app.base.BaseFragment
-import com.retofit.app.data.APIDataBean
+import com.retofit.app.data.Articles
+import com.retofit.app.data.ExampleJson2KtKotlin
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,8 +26,8 @@ import retrofit2.Response
 class ListFragment : BaseFragment<FragmentListBinding>(), BaseAdapter.OnItemClick {
     override fun getLayoutRes() = R.layout.fragment_list
     private var adapter: ActivityAdapter? = null
-    private var showDataList: ArrayList<APIDataBean> = arrayListOf()
-    private var dataList: ArrayList<APIDataBean> = arrayListOf()
+    private var showDataList: ArrayList<Articles> = arrayListOf()
+    private var dataList: ExampleJson2KtKotlin? = null
     private var numItemsPages = 10
     private val updateHandler = Handler(Looper.myLooper()!!)
     override fun initViewBinding() {
@@ -40,21 +40,32 @@ class ListFragment : BaseFragment<FragmentListBinding>(), BaseAdapter.OnItemClic
         if (isNetworkAvailable(baseActivity!!)) {
             val apiInterface: ApiService =
                 ApiClient().getApiClient()!!.create(ApiService::class.java)
-            apiInterface.getDataList().enqueue(object : Callback<ArrayList<APIDataBean>> {
+            apiInterface.getDataList(
+                "tesla","2024-06-21","publishedAt","ba909ad409f1423ab53e1e37a2aaf2fe"
+            ).enqueue(object : Callback<ExampleJson2KtKotlin> {
                 override fun onResponse(
-                    call: Call<ArrayList<APIDataBean>>,
-                    response: Response<ArrayList<APIDataBean>>
+                    call: Call<ExampleJson2KtKotlin>,
+                    response: Response<ExampleJson2KtKotlin>
                 ) {
-                    dataList = response.body()!!
-                    loadList()
+                    if (response.isSuccessful) {
+                        dataList = response.body()!!
+                        loadList()
+                    } else {
+                        // Log the error response
+                        val errorBody = response.errorBody()?.string()
+                        Log.e("ApiClient", "Error response: $errorBody")
+                        println("Raw error response: $errorBody")
+                    }
+
                 }
 
-                override fun onFailure(call: Call<ArrayList<APIDataBean>>, t: Throwable) {
+                override fun onFailure(call: Call<ExampleJson2KtKotlin>, t: Throwable) {
                     Toast.makeText(
                         baseActivity!!,
                         t.message,
                         Toast.LENGTH_SHORT
                     ).show()
+
                 }
             })
 
@@ -79,8 +90,8 @@ class ListFragment : BaseFragment<FragmentListBinding>(), BaseAdapter.OnItemClic
         val start = showDataList.size
         Log.e("catch_size", "start $start ${showDataList.size}")
         for (i in start until start + numItemsPages) {
-            if (i < dataList.size) {
-                showDataList.add(dataList[i])
+            if (i < (dataList?.articles?.size ?: 0)) {
+                dataList?.articles?.get(i)?.let { showDataList.add(it) }
             } else {
                 break
             }
@@ -96,7 +107,10 @@ class ListFragment : BaseFragment<FragmentListBinding>(), BaseAdapter.OnItemClic
         binding.idNestedSV.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY: Int, _, _ ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
                 val linearLayoutManager = binding.listRl.layoutManager as LinearLayoutManager
-                if (linearLayoutManager.findLastVisibleItemPosition() < dataList.size - 1) {
+                if (linearLayoutManager.findLastVisibleItemPosition() < (dataList?.articles?.size?.minus(
+                        1
+                    ) ?: 0)
+                ) {
                     binding.progressBar.visibility = View.VISIBLE
                     val runnable = Runnable {
                         loadList()
@@ -112,7 +126,7 @@ class ListFragment : BaseFragment<FragmentListBinding>(), BaseAdapter.OnItemClic
     override fun onItemClick(vararg items: Any) {
         findNavController().navigate(
             R.id.action_listFragment_to_detailFragment,
-            bundleOf("detail_info" to items[0] as APIDataBean)
+            bundleOf("detail_info" to items[0] as Articles)
         )
     }
 

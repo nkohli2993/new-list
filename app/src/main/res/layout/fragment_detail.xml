@@ -61,6 +61,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="Id: 1"
+            android:visibility="gone"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -75,21 +76,33 @@
             android:text="title: 1"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
-            app:layout_constraintEnd_toEndOf="@+id/idTxt"
-            app:layout_constraintStart_toStartOf="@+id/idTxt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idTxt" />
+
+        <ImageView
+            android:id="@+id/ivNews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:visibility="gone"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintTop_toBottomOf="@+id/titleTxt"
+            app:layout_constraintStart_toStartOf="@+id/titleTxt"
+            app:layout_constraintEnd_toEndOf="@id/titleTxt"
+            />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/detailTxt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
             android:text="title: 1"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
-            app:layout_constraintEnd_toEndOf="@+id/idTxt"
-            app:layout_constraintStart_toStartOf="@+id/idTxt"
-            app:layout_constraintTop_toBottomOf="@+id/titleTxt" />
+            android:layout_marginTop="@dimen/_4sdp"
+            app:layout_constraintEnd_toEndOf="@+id/titleTxt"
+            app:layout_constraintStart_toStartOf="@+id/titleTxt"
+            app:layout_constraintTop_toBottomOf="@+id/ivNews" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

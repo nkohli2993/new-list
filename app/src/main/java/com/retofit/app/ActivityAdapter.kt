@@ -2,12 +2,13 @@ package com.retofit.app
 import com.retofit.app.base.BaseActivity
 import com.retofit.app.base.BaseAdapter
 import com.retofit.app.base.BaseViewHolder
-import com.retofit.app.data.APIDataBean
+import com.retofit.app.data.Articles
+import com.retofit.app.data.ExampleJson2KtKotlin
 import com.retofit.app.databinding.AdapterDataBinding
 
 class ActivityAdapter(
     val baseActivity: BaseActivity,
-    val dataList: ArrayList<APIDataBean>
+    val dataList: ArrayList<Articles>
 ) : BaseAdapter<AdapterDataBinding>(),BaseAdapter.OnItemClick {
     override fun getLayoutRes()= R.layout.adapter_data
     init {
@@ -19,8 +20,8 @@ class ActivityAdapter(
         val binding = holder.binding as AdapterDataBinding
         val data = dataList[position]
 
-        binding.idTxt.text = baseActivity.setData(data.id.toString(),"Id")
-        binding.titleTxt.text =  baseActivity.setData(data.title,"Title")
+        binding.idTxt.text = baseActivity.setData(data.source?.id.toString(),"Id")
+        binding.titleTxt.text =  baseActivity.setData(data.title ?:"","Title")
         binding.root.setOnClickListener {
             onItemClick(data)
         }

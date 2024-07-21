@@ -1,16 +1,20 @@
 package com.retofit.app
 
-import com.retofit.app.ApiConstants
-import com.retofit.app.data.APIDataBean
+
+import com.retofit.app.data.ExampleJson2KtKotlin
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.*
 
 /**
  * Created by Nikita kohli
  */
 interface ApiService {
-    @GET(ApiConstants.LIST_SHOW)
-    fun getDataList(): Call<ArrayList<APIDataBean>>
+    @GET("everything")
+    fun getDataList(
+        @Query("q") nameString: String,
+        @Query("from") dateString: String,
+        @Query("sortBy") sortByString: String,
+        @Query("apiKey") apiKey: String
+    ): Call<ExampleJson2KtKotlin>
 
 }
