@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/listFragment">
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.retofit.app.new_list_detail.ListFragment"
+        android:label="listFragment"
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_listFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_bookmarkFragment"
+            app:destination="@id/bookmarkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.retofit.app.new_list_detail.DetailFragment"
+        android:label="detail page"
+        tools:layout="@layout/fragment_detail">
+
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarkFragment"
+        android:name="com.retofit.app.new_book_mark.BookMarkListFragment"
+        android:label="detail bookmarkFragment"
+        tools:layout="@layout/fragment_book_mark_list">
+
+        <action
+            android:id="@+id/action_bookmarkFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+</navigation>
